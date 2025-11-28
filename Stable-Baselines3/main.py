@@ -3,7 +3,7 @@ To start server:
 > `uvicorn main:app --reload`
 To stop the server, kill the terminal
 
-http://127.0.0.1:8000/doc - Swagger
+http://127.0.0.1:8000/docs - Swagger
 
 '''
 from pydantic import BaseModel, Field
