@@ -8,6 +8,7 @@ http://127.0.0.1:8000/docs - Swagger
 '''
 from pydantic import BaseModel, Field
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pomodoro.pomodoroEnv import PomodoroEnv
 
 
@@ -26,6 +27,13 @@ class Observation(BaseModel):
 	work_minutes_day: int
 	break_minutes_day: int
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # React dev server
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/pomodoro", response_model=Pomo)
 def function_name(data: Observation):

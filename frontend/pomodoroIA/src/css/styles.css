@@ -36,25 +36,26 @@ body {
     height: 90px;
     padding-right: 20px;
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
     align-items: center;
     background-color: var(--color-app-background);
 }
 
 .app-title {
-    font-size: 1.5rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
+    font-weight: 600;
+    padding: 35px;
+    /* letter-spacing: 0.1em; */
     color: var(--color-text-light);
+    font-size: 20px;
 }
 
 .login-button {
-    padding: 10px;
-    width: 170px;
-    background-color: var(--color-text-light);
-    color: var(--color-dark-background);
+    padding: 30px;
+    /* width: 200px; */
+    background-color: var(--color-app-background);
+    color: var(--color-text-light);
     font-weight: 500; 
-    font-size: 20px;
+    font-size: 18px;
     border-radius: 0.5rem; 
     transition: background-color 0.3s ease;
     border: none;
@@ -64,7 +65,7 @@ body {
 
 .login-button:hover {
     transform: translateY(-1.5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); */
 }
 
 /* ---------------------------- MAIN ---------------------------- */
@@ -152,10 +153,37 @@ body {
     transform: translateY(5px);
 }
 
+/* ---------------------------- NEW TEXT SECTION ---------------------------- */
+
+.counter-group {
+    display: flex;    
+    justify-content: center;
+    flex-direction: column;
+    max-width: 600px;    
+    margin-bottom: 2rem;
+    margin-top: -120px;
+    position: relative;
+    z-index: 10;
+    margin-bottom: 3rem;
+    background-color: var(--color-app-background);
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 10px;
+}
+
+.counter-text {
+    font-size: 20px;
+    align-self: center;
+    margin: 5px;
+    font-family: 'Azeret Mono', monospace;
+}
+
 /* ---------------------------- CONTROL SECTION ---------------------------- */
 
 .control-buttons-group {
-    margin-top: -100px;
+    /* margin-top: -100px; */
     display: flex;
     justify-content: center;
     width: 100%;
@@ -207,7 +235,9 @@ body {
 
 .restart-group {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    width: 80%;
+    justify-content: space-evenly;
     align-items: center;
     font-size: 20px;
     font-weight: 600;
@@ -221,6 +251,16 @@ body {
     background-color: var(--color-primary-red);
     transition: transform 0.3s ease, background-color 0.3s ease;
     border: none;
+}
+
+.restart-button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* margin-right: 25px; */
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center
 }
 
 .restart-button svg {
