@@ -121,10 +121,10 @@ class PomodoroEnv(gym.Env):
         # self.terminated = False
         # self.truncated = False
 
-    def reset(self, seed: Optional[int] = None):
+    def reset(self, *, seed = None, options=None):
         # if seed is not None:
         #     self.np_random, _ = seeding.np_random(seed)
-
+        # super().reset(seed=seed)
         self.np_random, seed = seeding.np_random(seed)
         self._seed = seed
 
@@ -320,7 +320,7 @@ class PomodoroEnv(gym.Env):
 
         # Penalize building too much fatigue: per-minute cost (small)
         # reward += self.fatigue_cost_per_min * work_minutes
-        reward += -1.5 * (fatigue / self.max_fatigue)
+        # reward += -1.5 * (fatigue / self.max_fatigue)
 
         return float(reward)
 
