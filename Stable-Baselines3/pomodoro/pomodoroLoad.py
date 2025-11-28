@@ -2,6 +2,7 @@ import warnings
 warnings.filterwarnings("ignore", category=UserWarning, module="pygame.pkgdata")
 
 import os
+import time
 import gymnasium as gym
 from gymnasium.wrappers import RescaleAction
 from stable_baselines3.common.vec_env import DummyVecEnv, VecNormalize
@@ -14,17 +15,8 @@ algorithm = "SAC"
 models_dir = algorithm + "/models"
 VecEnv_dir = algorithm + "/VecEnv"
 logdir = "logs"
-#C:> tensorboard --logdir=logs
 
-if not os.path.exists(models_dir):
-    os.makedirs(models_dir)
-
-if not os.path.exists(VecEnv_dir):
-    os.makedirs(VecEnv_dir)
-
-if not os.path.exists(logdir):
-    os.makedirs(logdir)
-
+# Create the environment
 
 
 def make_env():
@@ -47,26 +39,32 @@ def make_env():
 
 env = DummyVecEnv([make_env])
 
-env = VecNormalize(env, norm_obs=True, norm_reward=False)
+vector_path = f"{VecEnv_dir}/10000.pkl"
+env = VecNormalize.load(vector_path, env)
 
-# Train a model with a `stable_baselines3` algorithm
-model = SAC('MlpPolicy', env, verbose=1, tensorboard_log=logdir, 
-# Optional hyperparameters
-    # seed = 33,
-    learning_rate=3e-4,
-    n_steps=2048,
-    batch_size=64,
-    ent_coef=0.01,
-    # clip_range=0.2,
-    )
+model_path = f"{models_dir}/10000.zip"
+model = SAC.load(model_path, env=env)
 
+env.reset() # required before you can step the environment
 
-TIMESTEPS = 10_000
-iters = 0
-for _ in range(1):
-    iters += 1
-    
-    # model.learn(total_timesteps=10_000)
-    model.learn(total_timesteps=TIMESTEPS, reset_num_timesteps=False, tb_log_name=algorithm)
-    model.save(f"{models_dir}/{TIMESTEPS*iters}")
-    env.save(f"{VecEnv_dir}/{TIMESTEPS*iters}.pkl")
+vec_env = model.get_env()
+
+episodes = 5
+for ep in range(episodes):
+    obs = vec_env.reset()
+    print("Observation:", obs)
+    done = False
+    while not done:
+        time.sleep(2)
+        # pass observation to model to get predicted action
+        action, _states = model.predict(obs)
+
+        
+        print("Action:     ", action)
+        # pass action to env and get info back
+        obs, rewards, done, info = vec_env.step(action)
+
+        print("Observation:", obs, "reward:", rewards, "\n")
+ 
+
+# print("TRAINING FINISHED")
